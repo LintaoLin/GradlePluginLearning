@@ -18,6 +18,12 @@ class GreetingPlugin implements Plugin<Project> {
 //    }
     project.task("renameVersion", type: RenameVersionTask)
     project.tasks.getByName('clean').dependsOn('renameVersion')
+
+    project.task("printVersion") {
+      doFirst {
+        println(project.getVersion())
+      }
+    }
   }
 
   def javaVersion =  {
