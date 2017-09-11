@@ -1,8 +1,13 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
+import org.gradle.api.artifacts.DependencyResolutionListener
+import org.gradle.api.artifacts.ResolvableDependencies
 
 class GreetingPlugin implements Plugin<Project> {
 
+  private Configuration compile
+  private Configuration moduleCompile
 
   @Override
   void apply(Project project) {
@@ -16,14 +21,35 @@ class GreetingPlugin implements Plugin<Project> {
 //
 //      }
 //    }
-    project.task("renameVersion", type: RenameVersionTask)
-    project.tasks.getByName('clean').dependsOn('renameVersion')
-
-    project.task("printVersion") {
-      doFirst {
-        println(project.getVersion())
-      }
+//    project.task("renameVersion", type: RenameVersionTask)
+//    project.tasks.getByName('clean').dependsOn('renameVersion')
+//
+//    project.task("printVersion") {
+//      doFirst {
+//        println(project.getVersion())
+//      }
+//    }
+    println 'plugin lib init'
+    compile = project.configurations.compile
+    moduleCompile = project.configurations.create('testIII')
+//    compile.extendsFrom moduleCompile
+    compile.dependencies.all {
+      println it.name
     }
+    project.gradle.addListener(new DependencyResolutionListener() {
+      @Override
+      void beforeResolve(ResolvableDependencies resolvableDependencies) {
+        println 'beforeResolve'
+        moduleCompile.dependencies.collect {
+          def moduleName = it.name
+          println "module name is : $moduleName"
+        }
+        project.gradle.removeListener(this)
+      }
+
+      @Override
+      void afterResolve(ResolvableDependencies resolvableDependencies) {}
+    })
   }
 
   def javaVersion =  {

@@ -1,2 +1,2 @@
-include ':app', ':pluginlib'
+include ':app', ':pluginlib', ':libdependencylint', ':lintlibrary', ':lintlibrary-release'
 project(':pluginlib').projectDir = new File('pluginlib')

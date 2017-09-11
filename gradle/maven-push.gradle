@@ -1,5 +1,4 @@
 apply plugin: 'maven'
-apply plugin: 'signing'
 
 uploadArchives {
   repositories {
@@ -7,13 +6,15 @@ uploadArchives {
       def mavenUrl = project.repoType == 'local' ? uri('../pluginlib/repo') : 'releaseUrl'
       println "mavenUrl: $mavenUrl"
       repository(url: mavenUrl)
-      pom.project {
-        groupId 'tao.lin'
-        artifactId 'pluginlibs'
-        version '1.0.1'
-        packaging 'aar'
-        description 'test maven upload'
+      pom.project{
+          groupId 'tao.lin'
+          artifactId 'pluginlibs'
+          version '1.0.1'
+          packaging 'aar'
+          description 'test maven upload'
       }
+      println "packaging = ${pom.getPackaging()}"
+
     }
   }
 }
