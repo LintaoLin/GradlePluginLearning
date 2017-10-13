@@ -1,7 +1,11 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'tao.lin.pluginlib'
 //apply plugin: 'modular'
-//apply plugin: 'greeting-lib'
+apply plugin: 'greeting-lib'
+//apply plugin: 'tao.lin.pluginlib'
+
+//gTest {
+//  message 'no thing'
+//}
 android {
   compileSdkVersion 26
   buildToolsVersion "26.0.1"
@@ -11,12 +15,27 @@ android {
     targetSdkVersion 26
     versionCode 1
     versionName "1.0"
+    multiDexEnabled false
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  signingConfigs {
+    release {
+      storeFile file('/Users/lint/Documents/keys/umefit.jks')
+      keyAlias 'umefit'
+      keyPassword 'umefit66'
+      storePassword 'umefit666'
+    }
   }
 
   buildTypes {
+    debug {
+      signingConfig signingConfigs.release
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
     release {
-      minifyEnabled false
+      signingConfig signingConfigs.release
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
@@ -27,20 +46,50 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile project(':lintlibrary-release')
-  compile localGroovy()
-
-//  compile 'me.ele.warlock:application:7.18.0-SNAPSHOT'
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+//  compile project(':lintlibrary-release')
+  //  compile 'me.ele.warlock:application:7.18.0-SNAPSHOT'
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-
-
   compile 'com.android.support:appcompat-v7:26.+'
-  compile 'com.android.support.constraint:constraint-layout:1.0.2'
-
   testCompile 'junit:junit:4.12'
-
-
 }
+
+class TimingsListener implements TaskExecutionListener, BuildListener {
+  private org.gradle.internal.time.Clock clock
+  private timings = []
+  @Override
+  void beforeExecute(Task task) {
+    clock = new org.gradle.internal.time.Clock()
+  }
+
+  @Override
+  void afterExecute(Task task, TaskState state) {
+    def ms = clock.getElapsedMillis()
+    timings.add([ms, task.path])
+    task.project.logger.warn "${task.path} times ${ms}ms"
+  }
+
+  @Override
+  void projectsEvaluated(Gradle gradle) {}
+
+  @Override
+  void buildStarted(Gradle gradle) {}
+
+  @Override
+  void settingsEvaluated(Settings settings) {}
+
+  @Override
+  void projectsLoaded(Gradle gradle) {}
+
+  @Override
+  void buildFinished(BuildResult result) {
+    println 'task time cost'
+    timings.each {
+      printf "%7s ms  %s\n", it
+    }
+  }
+}
+
+gradle.addListener(new TimingsListener())

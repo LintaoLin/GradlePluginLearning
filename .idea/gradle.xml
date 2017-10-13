@@ -10,10 +10,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
-            <option value="$PROJECT_DIR$/libdependencylint" />
-            <option value="$PROJECT_DIR$/lintlibrary" />
-            <option value="$PROJECT_DIR$/lintlibrary-release" />
-            <option value="$PROJECT_DIR$/pluginlib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

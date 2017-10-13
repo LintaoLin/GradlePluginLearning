@@ -9,6 +9,10 @@ buildscript {
     maven {
       url "http://maven.dev.elenet.me/nexus/content/groups/public"
     }
+    mavenLocal()
+    maven {
+      url 'https://maven.atlassian.com/3rdparty/'
+    }
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:2.3.3'
@@ -26,6 +30,4 @@ allprojects {
   }
 }
 
-task clean(type: Delete) {
-  delete rootProject.buildDir
-}
+

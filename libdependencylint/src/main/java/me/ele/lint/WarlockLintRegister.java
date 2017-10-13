@@ -7,6 +7,6 @@ import java.util.List;
 
 public class WarlockLintRegister extends IssueRegistry {
   @Override public List<Issue> getIssues() {
-    return Arrays.asList(MethodNameCheckDetector.ISSUE, WarlockDependencyDetector.ISSUE);
+    return Arrays.asList(MethodNameCheckDetector.ISSUE, WarlockDependencyDetector.ISSUE, ApkSizeDetector.ISSUE);
   }
 }

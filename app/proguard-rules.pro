@@ -1,6 +1,6 @@
 # Add project specific ProGuard rules here.
 # By default, the flags in this file are appended to flags specified
-# in /Users/lint/Library/Android/sdk/tools/proguard/proguard-android.txt
+# in /Applications/Android Studio.app/sdk/tools/proguard/proguard-android.txt
 # You can edit the include path and order by changing the proguardFiles
 # directive in build.gradle.
 #
@@ -16,10 +16,34 @@
 #   public *;
 #}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-dontshrink
+-optimizationpasses 5
+-dontusemixedcaseclassnames#混淆时不会大小写混合类名
+-dontskipnonpubliclibraryclasses #指定不去忽略非公共的库类
+-dontpreverify #不预校验
+-dontwarn #不警告
+-verbose
+#-optimizations !code/simplification/arithmetic,!field/*,!class/merging/* #优化配置
+-dontoptimize #不优化
+-ignorewarnings #忽略警告
+#-repackageclasses tao.lin
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# 保留签名，解决泛型、类型转换的问题
+-keepattributes Signature
+-keepattributes Exceptions
+# 不混淆带有 annotation 的变量 和 函数
+-keepattributes *Annotation*
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+
+-keep class !lin.tao.**, !retrofit2.**{*;}
+
+-keepclassmembers,allowoptimization enum * {
+      public static **[] values();
+      public static ** valueOf(java.lang.String);
+}
+
+
+
+
+

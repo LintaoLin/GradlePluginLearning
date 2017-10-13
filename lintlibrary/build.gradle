@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+//apply plugin: 'tao.lin.pluginlib'
 
 configurations {
   lintRules
@@ -12,7 +13,7 @@ android {
     targetSdkVersion 26
     versionCode 1
     versionName "1.0"
-
+    multiDexEnabled false
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
@@ -34,6 +35,7 @@ dependencies {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
   compile 'com.android.support:appcompat-v7:26.+'
+  compile 'com.squareup.retrofit2:converter-gson:2.0.2'
   testCompile 'junit:junit:4.12'
   lintRules project(path:':libdependencylint', configuration: "lintChecks")
 }
@@ -60,4 +62,46 @@ project.afterEvaluate{
   def buildTask  = project.tasks.find {it.name == 'check'}
   buildTask.dependsOn(copyAar)
 }
+
+//class TimingsListener implements TaskExecutionListener, BuildListener {
+//  private org.gradle.internal.time.Clock clock
+//  private timings = []
+//  @Override
+//  void beforeExecute(Task task) {
+//    clock = new org.gradle.internal.time.Clock()
+//  }
+//
+//  @Override
+//  void afterExecute(Task task, TaskState state) {
+//    def ms = clock.getElapsedMillis()
+//    timings.add([ms, task.path])
+//    task.project.logger.warn "${task.path} times ${ms}ms"
+//  }
+//
+//  @Override
+//  void projectsEvaluated(Gradle gradle) {}
+//
+//  @Override
+//  void buildStarted(Gradle gradle) {}
+//
+//  @Override
+//  void settingsEvaluated(Settings settings) {}
+//
+//  @Override
+//  void projectsLoaded(Gradle gradle) {}
+//
+//  @Override
+//  void buildFinished(BuildResult result) {
+//    println 'task time cost'
+//    timings.each {
+//      printf "%7s ms  %s\n", it
+//    }
+//  }
+//}
+
+//artifacts {
+//  archives sourcesJar, javadocJar
+//}
+
+//gradle.addListener(new TimingsListener())
 

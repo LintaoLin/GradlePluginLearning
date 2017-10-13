@@ -5,10 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/GradlePlugin.iml" filepath="$PROJECT_DIR$/GradlePlugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/buildSrc/buildSrc.iml" filepath="$PROJECT_DIR$/buildSrc/buildSrc.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libdependencylint/libdependencylint.iml" filepath="$PROJECT_DIR$/libdependencylint/libdependencylint.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lintlibrary/lintlibrary.iml" filepath="$PROJECT_DIR$/lintlibrary/lintlibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lintlibrary-release/lintlibrary-release.iml" filepath="$PROJECT_DIR$/lintlibrary-release/lintlibrary-release.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pluginlib/pluginlib.iml" filepath="$PROJECT_DIR$/pluginlib/pluginlib.iml" />
     </modules>
   </component>
 </project>
